@@ -1,0 +1,18 @@
+name: Build ESP-Drone S3
+on: [push, workflow_dispatch]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v5.3.1
+          target: esp32s3
+          path: firmware/esp-drone
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware-esp32s3
+          path: firmware/esp-drone/build/*.bin
